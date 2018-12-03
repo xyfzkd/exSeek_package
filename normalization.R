@@ -83,7 +83,7 @@ normalize <- function(
 norm_SCnorm <- function(mat, ...) {
 	Conditions = rep(1, ncol(mat));
 	sce <- suppressMessages(SCnorm::SCnorm(mat, Conditions, ...));
-	SCnorm::normcounts(sce)
+	SCnorm::results(sce)
 }
 
 # norm_scater ------------------
