@@ -24,3 +24,13 @@ main function zhuoer wrote lacking imputation, I add this part into normalizatio
 
 #### I wrote script for batch removal,
 * batch-removal.R
+##### reference:
+```
+origin script:
+home/chenxupeng/projects/exseek/jupyter/matrix_processing.ipynb
+
+combat:
+http://jtleek.com/genstats/inst/doc/02_13_batch-effects.html
+https://www.bioconductor.org/packages/release/bioc/vignettes/sva/inst/doc/sva.pdf
+```
+
