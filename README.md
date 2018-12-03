@@ -6,3 +6,21 @@ There are some tiny probelms in the scripts Zhuoer wrote for matrix processing. 
 * ...
 
 [rexSeek](https://github.com/dongzhuoer/rexseek)
+
+### 2018.12.03
+|package|author|
+| :-- | :-- |
+|normalization.R|zhuoer|
+|matrix-process.R|zhuoer|
+|batch-removal.R|yufengxie|
+
+#### I improved scripts zhuoer wrote,
+* matrix-process.R
+
+add imputation function
+
+* normalization.R
+main function zhuoer wrote lacking imputation, I add this part into normalization main function.
+
+#### I wrote script for batch removal,
+* batch-removal.R
