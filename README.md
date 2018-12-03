@@ -21,6 +21,7 @@ There are some tiny probelms in the scripts Zhuoer wrote for matrix processing. 
 add imputation function
 
 * normalization.R
+
 main function zhuoer wrote lacking imputation, I add this part into normalization main function.
 
 #### I wrote script for batch removal,
