@@ -39,7 +39,7 @@ normalize <- function(
     output_dir = '.',output_file = 'norm'
 ) {
 	normalize_check_arg(norm_methods, top_n, rm_gene_type, refer_gene_id)
-	mat <- read_mat(counts_mat_path) %>% filter_low(min_count, min_sample_per_gene) %>% imputation(tmp_path, impute_path, K, N)
+	mat <- read_mat(counts_mat_path) %>% filter_low() %>% imputation(tmp_path, impute_path, K, N)
 
 	if ('SCnorm' %in% norm_methods)    mat_scnorm <- norm_SCnorm(mat)
 	if ('TMM' %in% norm_methods)       mat_tmm <- norm_tmm(mat)
