@@ -9,7 +9,7 @@ There are some tiny probelms in the scripts Zhuoer wrote for matrix processing. 
 [rexSeek](https://github.com/dongzhuoer/rexseek)
 
 ### 2018.12.03
-|package|author|
+|script|author|
 | :-- | :-- |
 |normalization.R|zhuoer|
 |matrix-process.R|zhuoer|
