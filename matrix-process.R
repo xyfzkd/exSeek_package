@@ -134,55 +134,155 @@ plot_TSNE <- function(sce, shape = NULL, color = NULL) {
 	plot_group_impl(sce, shape, color, scater::plotTSNE)
 }
 
-# plot CV -------------------------
+# plot_variance --------------
 
-coef_var_fun <- function(x) {
-	sd(x, na.rm = T) / mean(x, na.rm = T)
+
+#' get y axis range of ggplot object.
+get_y_range <- function(plot) {
+    ggplot2::ggplot_build(plot)$layout$panel_params[[1]]$y.range
+}
+
+#' @title generate equally spaced y coordinates, not hit bottom nor top.
+#'
+#' @details Image `plot`'s y axis extends from 0 to 3, `x` contains 3 values,
+#' then we give `c(0.5, 1.5, 2.5)`.
+#'
+#' @param plot ggplot object.
+#' @param x numberic vector
+#'
+#' @return numeric vector. The same length as `x`
+#'
+#' @keywords internal
+seq_y <- function(plot, x) {
+    y_range <- get_y_range(plot)
+    by <- diff(y_range) / length(x)
+    seq(y_range[1] + by, y_range[2], by) - by/2
 }
 
 
-#' @title density plot of coefficient of variation
+#' @title plot variance of counts across samples
 #'
 #' @param mat integer matrix. counts
-#' @param refer_gene_id character.
-#' @param refer_gene_name character.
+#' @param refer_gene_id character. Ensembl transcript id, add a vertical line
+#'   for each gene to mark the corresponding CV (on x axis). Only genes in
+#'   counts matrix would be shown. Usually these genes should be the reference
+#'   genes you want to use for normalization.
+#' @param refer_gene_name character. Transcript name
 #'
-#' @return [ggplot2::ggplot()] object
+#' @return [ggplot2::ggplot()] object.
 #'
-#' @examples NULL
+#' @name plot_variance
+NULL
+
+
+
+
+
+#' @details
+#' `plot_cv_density()` produces density plot of coefficient of variation
+#'
+#' @examples
+#' # only one gene exist in the matrix
+#' plot_cv_density(sim_mat, suggest_refer$id)
+#' plot_cv_density(sim_mat, suggest_refer$id, suggest_refer$name)
+#'
+#' # the name should be the same length as id
+#' plot_cv_density(sim_mat, rownames(sim_mat)[1:6], letters[1:3])
+#' # if only part of the genes have name, you can pass the id of other genes
+#' plot_cv_density(sim_mat, rownames(sim_mat)[1:6], c(letters[1:3], rownames(sim_mat)[4:6]))
 #'
 #' @export
+#'
+#' @rdname plot_variance
 
 # mat = sim_mat
 # refer_gene_id = suggest_refer$id
 # refer_gene_name = suggest_refer$name
 plot_cv_density <- function(mat, refer_gene_id = '', refer_gene_name = refer_gene_id) {
-	coef_var_df <- mat %>% apply(1, coef_var_fun) %>%
-		{tibble::tibble(id = names(.), value = .)} %>%
-		dplyr::mutate(id = stringr::str_extract(id, '[^|]+'))
-	coef_var_refer_df <- tibble::tibble(id = refer_gene_id, name = refer_gene_name) %>%
-		dplyr::inner_join(coef_var_df, by = 'id')
-
-	plot <- ggplot2::ggplot(coef_var_df) +
-		ggplot2::geom_density(ggplot2::aes(value), color = 'blue')
-
-	if (nrow(coef_var_refer_df) > 0L) {
-
-		plot = plot +
-			ggplot2::geom_vline(xintercept = coef_var_refer_df$value, color = 'green') +
-			ggplot2::geom_point(
-				ggplot2::aes(x = value, y = seq_along(value)),
-				data = coef_var_refer_df, size = 2, shape = 1
-			) +
-			ggrepel::geom_label_repel(
-				ggplot2::aes(x = value, y = seq_along(value), label = name),
-				data = coef_var_refer_df, hjust = 0.5
-			)
-	}
-
-	return(plot)
+    cv <- mat %>% apply(1, cv_fun) %>%
+    {tibble::tibble(id = names(.), value = .)} %>%
+    dplyr::mutate(id = stringr::str_extract(id, '[^|]+'))
+    plot <- ggplot2::ggplot(cv, ggplot2::aes(value)) +
+    ggplot2::geom_density(color = 'blue') +
+    ggplot2::labs(x = 'coefficient of variation')
+    
+    if (length(refer_gene_id) != length(refer_gene_name)) {
+        warning("Ignoring refer_gene_name, since it isn't the same length as refer_gene_id")
+        refer_gene_name = refer_gene_id
+    }
+    cv_refer <- tibble::tibble(id = refer_gene_id, name = refer_gene_name) %>%
+    dplyr::inner_join(cv, by = 'id')
+    if (nrow(cv_refer) == 0L) {
+        warning("None refer gene found in the count matrix")
+        return(plot)
+    }
+    
+    plot + ggplot2::geom_vline(xintercept = cv_refer$value, color = 'green') +
+    ggplot2::geom_point(
+    ggplot2::aes(x = value, y = seq_y(plot, value)),
+    data = cv_refer, size = 2, shape = 1
+    ) +
+    ggrepel::geom_label_repel(
+    ggplot2::aes(x = value, y = seq_y(plot, value), label = name),
+    data = cv_refer, hjust = 0.5
+    )
 }
 
 
 
+#' @details
+#' `plot_cv_density()` produces density plot of coefficient of variation
+#'
+#' @examples
+#' # only one gene exist in the matrix
+#' plot_refer_violin(sim_mat, suggest_refer$id)
+#' plot_refer_violin(sim_mat, suggest_refer$id, suggest_refer$name)
+#'
+#' # the name should be the same length as id
+#' plot_refer_violin(sim_mat, rownames(sim_mat)[1:6], letters[1:3])
+#' # if only part of the genes have name, you can pass the id of other genes
+#' plot_refer_violin(sim_mat, rownames(sim_mat)[1:6], c(letters[1:3], rownames(sim_mat)[4:6]))
+#'
+#' @export
+#'
+#' @rdname plot_variance
 
+# mat = sim_mat
+# refer_gene_id = rownames(mat)[1:6]
+# refer_gene_name = paste0('gene_', letters[1:6])
+plot_refer_violin <- function(mat, refer_gene_id, refer_gene_name = refer_gene_id) {
+    if (length(refer_gene_id) != length(refer_gene_name)) {
+        warning("Ignoring refer_gene_name, since it isn't the same length as refer_gene_id")
+        refer_gene_name = refer_gene_id
+    }
+    
+    refer_gene <- tibble::tibble(id = refer_gene_id, name = refer_gene_name)
+    refer_count <- mat %>% tibble::as_tibble(rownames = 'id') %>%
+    dplyr::mutate(id = stringr::str_extract(id, '[^|]+')) %>%
+    dplyr::inner_join(refer_gene, ., by = 'id') %>% dplyr::select(-id)
+    if (nrow(refer_count) == 0L) {
+        warning('None refer gene found in the count matrix')
+        return(ggplot2::ggplot())
+    }
+    
+    refer_count_long <- refer_count %>%    tidyr::gather('sample', 'count', -1) %>%
+    dplyr::mutate_at('name', as.factor)
+    g_violin <- refer_count_long %>%
+    ggplot2::ggplot(ggplot2::aes(name, log2(count + 0.001))) +
+    ggplot2::geom_violin() +
+    ggplot2::labs(x = 'reference transcripts', y = quote(log[2](count)))
+    
+    # max y coordinate of each violin
+    y_max <- ggplot2::ggplot_build(g_violin)$data[[1]] %>% tibble::as_tibble() %>%
+    dplyr::group_by(x) %>% dplyr::arrange(dplyr::desc(y)) %>% dplyr::slice(1) %>%
+    dplyr::ungroup() %>% dplyr::arrange(x) %>% dplyr::select(x, y)
+    
+    cv_df <- refer_count_long %>%
+    dplyr::group_by(name) %>% dplyr::summarise(cv = cv_fun(count)) %>%
+    dplyr::arrange(name) %>% dplyr::mutate(x = seq_along(name)) %>%
+    dplyr::inner_join(y_max, by = 'x') %>%
+    dplyr::mutate(y = y + diff(get_y_range(g_violin)) / 20) %>%
+    dplyr::mutate(cv = formatC(cv, digits = 3, format = 'f'))
+    
+    g_violin + ggplot2::geom_text(ggplot2::aes(x, y, label = cv), cv_df, color = 'blue')
+}
