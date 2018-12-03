@@ -35,7 +35,7 @@ normalize <- function(
 	top_n = NULL, rm_gene_type = NULL, refer_gene_id = NULL,
 	sample_class_path = NULL, PCA_label_by = NULL, PAC_color_by = NULL,
 	refer_gene_name = refer_gene_id,
-	tmp_path='.', K = 5, N = 3
+	tmp_path='.', K = 5, N = 3,
     output_dir = '.',output_file = 'norm'
 ) {
 	normalize_check_arg(norm_methods, top_n, rm_gene_type, refer_gene_id)
