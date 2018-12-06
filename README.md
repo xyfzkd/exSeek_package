@@ -1,5 +1,5 @@
 # exSeek_package
-There are some tiny probelms in the scripts Zhuoer wrote for matrix processing. Imputation and batch removal were not included in matrix processing. 
+There are some tiny probelms in the scripts Zhuoer wrote for matrix processing. Imputation and batch removal were not included in matrix processing.
 ## WHAT I DO IS:
 * Add imputation.
 * Add batch removal including RUVs and combat.
@@ -35,4 +35,4 @@ combat:
 http://jtleek.com/genstats/inst/doc/02_13_batch-effects.html
 https://www.bioconductor.org/packages/release/bioc/vignettes/sva/inst/doc/sva.pdf
 ```
-
+### 2018.12.06
