@@ -36,3 +36,11 @@ http://jtleek.com/genstats/inst/doc/02_13_batch-effects.html
 https://www.bioconductor.org/packages/release/bioc/vignettes/sva/inst/doc/sva.pdf
 ```
 ### 2018.12.06
+* plot.R
+
+run well on my account, but failed in Binbin & Xupeng's
+
+### 2018.12.08
+* refer_output.ipynb
+
+for function `norm_cpm_refer`, I add a command, allowing producing refer_id.txt
