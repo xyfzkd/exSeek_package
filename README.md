@@ -44,3 +44,12 @@ run well on my account, but failed in Binbin & Xupeng's
 * refer_output.ipynb
 
 for function `norm_cpm_refer`, I add a command, allowing producing refer_id.txt
+
+### 2018.12.10 
+top k function changed
+
+top k genes use counts top k sum as factor
+others use count down sum as factor
+
+But what happened to counts value near cut-off? How to solve this problem?
+
