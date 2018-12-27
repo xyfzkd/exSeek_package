@@ -45,7 +45,7 @@ run well on my account, but failed in Binbin & Xupeng's
 
 for function `norm_cpm_refer`, I add a command, allowing producing refer_id.txt
 
-### 2018.12.10 
+### 2018.12.10
 top k function changed
 
 top k genes use counts top k sum as factor
@@ -53,3 +53,16 @@ others use count down sum as factor
 
 But what happened to counts value near cut-off? How to solve this problem?
 
+### 2018.12.27
+wrote plot codes of {R,python}
+
+based of `plot.ipynb`, I wrote R version `r2py_plot-Copy1.ipynb` and python version `r2py_plot.ipynb`, the latter of which output bad pics because of rpy2 package.
+
+#### some problems solved
+* plot_highest_exprs using gene ID as index
+
+***
+diff_exp added
+function diff_exp in `diff_exp.ipynb` section 6.2 can produce files such as `Healthy.CRC.csv` containing padj_values
+[Analyzing RNA-seq data with DESeq2](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#theory)
+[Package ‘DESeq2’](https://bioconductor.org/packages/release/bioc/manuals/DESeq2/man/DESeq2.pdf)
