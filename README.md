@@ -53,3 +53,8 @@ others use count down sum as factor
 
 But what happened to counts value near cut-off? How to solve this problem?
 
+### 2019.2.22
+kBET exploration
+
+### 2019.3.2
+quiz-ROC plot
