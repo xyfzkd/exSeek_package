@@ -53,15 +53,38 @@ others use count down sum as factor
 
 But what happened to counts value near cut-off? How to solve this problem?
 
-### 2019.??.??
+### 2019.??.?? (long-term)
 * plot-python_{dataset}.ipynb
 
 modify each pic, fontsize, lable setting
-basic plot, such as abundance plot, batch_class plot
+
+write basic plot function, such as abundance plot, RNA batch by batch, RLE batch, PCA batch
+
+write feature_weight_bar function
+
+top K feature
+
+RLE
+### 2019.2.14 -- 2019.2.16
+
+have fun, wordcloud combined with pic, 
+and HTML5 learning, 
+use WordPress to make website 
 
 ### 2019.2.22
 kBET exploration
+
 (codes is too complicated, but there are some tricks author ignored )
+
+### 2019.3.1
+* plot-python_scirep-2-28.ipynb
+
+
+PCA alpha function added
+
+* heterogeneity.ipynb
+
+heterogeneity plot, ref-gene acquired from MiRbase, catplot function exploration
 
 ### 2019.3.2
 * quiz-ROC plot
@@ -77,4 +100,11 @@ to make feature-selection files used for ROC plot
 * quiz_right.ipynb 
 
 ROC plot
+
+* news
+[Lightning Network](http://lightning.pictures/)
+
+https://satoshis.place/
+
+https://cloud.google.com/bigquery/?hl=zh-cn
 
