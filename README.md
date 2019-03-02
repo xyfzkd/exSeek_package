@@ -102,7 +102,9 @@ to make feature-selection files used for ROC plot
 ROC plot
 
 * news
-[Lightning Network](http://lightning.pictures/)
+[Lightning Network]
+
+(http://lightning.pictures/)
 
 https://satoshis.place/
 
