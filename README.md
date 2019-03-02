@@ -58,3 +58,8 @@ kBET exploration
 
 ### 2019.3.2
 quiz-ROC plot
+
+quiz.ipynb
+quiz_tired.ipynb to make feature-selection files used for ROC plot
+quiz_right.ipynb (
+
