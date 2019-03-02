@@ -58,9 +58,17 @@ kBET exploration
 (codes is too complicated, but there are some tricks author ignored )
 
 ### 2019.3.2
-quiz-ROC plot
+* quiz-ROC plot
 
-quiz.ipynb (use diff_exp feature to plot ROC, fpr-tpr dataframe provided)
-quiz_tired.ipynb to make feature-selection files used for ROC plot
-quiz_right.ipynb (ROC plot
+* quiz.ipynb 
+
+(use diff_exp feature to plot ROC, fpr-tpr dataframe provided)
+
+* quiz_tired.ipynb 
+
+to make feature-selection files used for ROC plot
+
+* quiz_right.ipynb 
+
+ROC plot
 
